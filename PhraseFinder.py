@@ -25,47 +25,68 @@ def clean_up_sen(a):
 #     
 #    return DATE
 
-def find_date(fulltext,sen,index_text):
+def find_date(fulltext,sen,index_text,date_tab):
     DATE = 0
+    found = 0
     #AnalyseDate = re.split('\W+',sen)
     AnalyseDate = sen
     for i in range(len(AnalyseDate)):
         if len(AnalyseDate[i]) == 4 and AnalyseDate[i].isdigit():
             DATE = AnalyseDate[i]
-        else:
-            for j in range(0,index_text):
-                AnalyseDate2 = fulltext[j]
-                for i in range(0,len(AnalyseDate2)):
-                    if len(AnalyseDate2[i]) == 4 and AnalyseDate2[i].isdigit():
-                        DATE = AnalyseDate2[i]
-    if DATE == 0:
+            found = 1
+#        else:
+#            for j in range(0,index_text):
+#                AnalyseDate2 = fulltext[j]
+#                for i in range(0,len(AnalyseDate2)):
+#                    if len(AnalyseDate2[i]) == 4 and AnalyseDate2[i].isdigit():
+#                        DATE = AnalyseDate2[i]
+    if len(date_tab) != 0 and found == 0:
+        DATE = date_tab[len(date_tab)-1]
+        found = 0
+        return DATE
+    if DATE == 0 and found == 0:
         DATE = 'None'            
     return DATE
 
-def analyse_sen(sen,DateTab):
+
+def find_pays(fulltext,sen,index_text,pays_tab):
+    PAYS = 0
+    found = 0
+    #AnalyseDate = re.split('\W+',sen)
+    AnalysePays = sen
+    for i in range(len(AnalysePays)):
+        if AnalysePays[i] in Pays:
+            PAYS = AnalysePays[i]
+            found = 1
+    if len(pays_tab) != 0 and found == 0:
+        PAYS = pays_tab[len(pays_tab)-1]
+        found = 0
+        return PAYS
+    if PAYS == 0 and found == 0:
+        PAYS = 'None'            
+    return PAYS
+
+
+def analyse_sen(sen,DateTab,PaysFinal_):
     TailleSen_= 0
-    PaysFinal_ = ""
+    PaysFinal_ = []
     for j in range(0,len(sen)):
             AnalyseSen = sen[j]
             AnalyseSen = clean_up_sen(AnalyseSen)
             AnalyseSen = re.split('\W+',sen[j])
-
-            DateTab.append(find_date(sen,AnalyseSen,j)) #FIND DATE
+            PaysFinal_.append(find_pays(sen,AnalyseSen,j,PaysFinal_))
+            DateTab.append(find_date(sen,AnalyseSen,j,DateTab)) #FIND DATE
             TailleSen_ += len(AnalyseSen) 
             AnalyseDate = re.split('\W+',sen[j])
 #                if len(AnalyseDate[i]) == 4 and AnalyseDate[i].isdigit():
             #for i in range(0,len(AnalyseDate)):
  #                       DATEFinal_ = AnalyseDate[i]
-            for i in range(0,len(AnalyseDate)):
-                for j in range(0,len(Pays)):
-                    if AnalyseDate[i] in Pays:
-                            PaysFinal_ = AnalyseDate[i]
             for k in range(0,len(AnalyseSen)):
                 SenFull.append(AnalyseSen[k])
     return TailleSen_, DateTab,PaysFinal_
 
 
-def Occurence(sen,DateTab):
+def Occurence(sen,DateTab,PaysTab):
      #sort by occurence
     words = []
     wordsocc = []
@@ -98,30 +119,35 @@ def Occurence(sen,DateTab):
             
     T = []
     T = [x for _,x in sorted(zip(sen_tot_occ,sen))]
-    Tot_occ = sorted(sen_tot_occ)
+    
     Date = []
     Date = [x for _,x in sorted(zip(sen_tot_occ,DateTab))]
-    return T, Tot_occ,Date
+    Pays = []
+    Pays = [x for _,x in sorted(zip(sen_tot_occ,PaysTab))]
+    Tot_occ = sorted(sen_tot_occ)
+    return T, Tot_occ,Date,Pays
     
 
 
 
-def NameOccExp(Sen,Occ,Name,DateTab):
+def NameOccExp(Sen,Occ,Name,DateTab,PaysTab):
     for i in range(0,len(Sen)):
         AnalyseName = re.split('\W+',Sen[i])
         for j in range(0,len(AnalyseName)):
             if Name == AnalyseName[j]:
-                Occ[i] -= 1
+                Occ[i] -= 10
                 index = i
                 for k in range(0,len(Sen)):
                     if k != index:
                         Occ[k] -= math.exp(-abs(index-k))
     T = []
     T = [x for _,x in sorted(zip(Occ,Sen))]
-    Tot_occ = sorted(Occ)
     Date = []
     Date = [x for _,x in sorted(zip(Occ,DateTab))]
-    return T, Tot_occ,Date
+    Pays = []
+    Pays = [x for _,x in sorted(zip(Occ,PaysTab))]
+    Tot_occ = sorted(Occ)
+    return T, Tot_occ,Date,Pays
             
 #------------------------------------------------------------------------------
     #------------------------------------------------------------------------------
@@ -144,8 +170,8 @@ TailleSen = 0
 senTaille = []
 AnalyseSen = []
 NewSen = []
-PaysFinal = ' '
 TailleSen = 0
+PAYS = ""
 DATE = ""
 DATEFinal = ''
 Sorted_sen = []
@@ -154,7 +180,7 @@ Sorted_occ = []
 import SentenceAnalyzer as SA
 
 
-def Define_AbsOcc(NS,AO):
+def Define_AbsOcc(NS,AO,DT,PF):
     Tense = []
     for i in range(0,len(NS)):
         Words = SA.sen_format(NS[i],SA.load_dico())
@@ -178,24 +204,24 @@ def Define_AbsOcc(NS,AO):
             AO[i] = 0
     T = []
     T = [x for _,x in sorted(zip(AO,NS))]
+    Date = []
+    Date = [x for _,x in sorted(zip(AO,DT))]
+    Pays = []
+    Pays = [x for _,x in sorted(zip(AO,PF))]
     AO = sorted(AO)    
-    return T,AO
+    return T,AO,Date,Pays
 
 
 def find_evenement(Lines, Full, Name):
-    DATE_JOURNAL = ''
     DateTab = []
+    PaysFinal = []
     #DATE_JOURNAL = find_date(Full,DateTab)
-    [TailleSen,DATE,PaysFinal] = analyse_sen(Lines,DateTab)
-    [Sorted_sen, Sorted_occ,DateTab] = Occurence(Lines,DateTab)
-    [Sorted_sen, Sorted_occ,DateTab] = NameOccExp(Sorted_sen,Sorted_occ,Name,DateTab)
+    [TailleSen,DATE,PaysFinal] = analyse_sen(Lines,DateTab,PaysFinal)
+    [Sorted_sen, Sorted_occ,DateTab,PaysFinal] = Occurence(Lines,DateTab,PaysFinal)
+    [Sorted_sen, Sorted_occ,DateTab,PaysFinal] = NameOccExp(Sorted_sen,Sorted_occ,Name,DateTab,PaysFinal)
     New_Sorted_sen = []
     for i in range(0,len(Sorted_sen)):
         New_Sorted_sen.append(clean_up(Sorted_sen[i]))
-    if PaysFinal is None:
-        PaysFinal = '_NONE_'
-    if DATE_JOURNAL is None:
-        DATE_JOURNAL = '_NONE_'
     
     NewSortedSen = []
     NewSortedOcc = []
@@ -212,14 +238,14 @@ def find_evenement(Lines, Full, Name):
     
     
     
-    [NewSortedSen,NewSortedOcc] = Define_AbsOcc(NewSortedSen,NewSortedOcc)
+    [NewSortedSen,NewSortedOcc,DateTab,PaysFinal] = Define_AbsOcc(NewSortedSen,NewSortedOcc,DateTab,PaysFinal)
     
     
     TempTab = []
     FinalTab = []
     for i in range(0,len(NewSortedSen)):
         TempTab.append(DateTab[i])
-        TempTab.append(PaysFinal)
+        TempTab.append(PaysFinal[i])
         TempTab.append(NewSortedSen[i])
         TempTab.append(NewSortedOcc[i])
         FinalTab.append(TempTab)
