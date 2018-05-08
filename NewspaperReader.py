@@ -238,13 +238,13 @@ class base_gui():
 	def run_search(self):
 		name = self.name_entry.get()
 		arn = self.arn_entry.get()
-		#waf.make_doc(name, arn, 1)
+		waf.make_doc(name, arn, 1)
 		prof = es.fiche(name)
 		for filename in enumerate(os.listdir(name + '/')):
 			nom_fichier= name + '/' + filename[1]
 			text = open_fichier(nom_fichier)
 			sen = get_text_for_name(nom_fichier,name)
-			evs = pf.find_evenement(sen,text)
+			evs = pf.find_evenement(sen,text,name)
 			for e in range(len(evs)):
 				ev = es.evenement(evs[e][0],evs[e][1],evs[e][2])
 				prof.add_evenement(ev)
