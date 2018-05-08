@@ -1,1 +1,1 @@
-Ceci est le code de la SHS 4: Humanités Digitales 2018.
+Cete repository contient le code pour la SHS Humanités Digitales 2018.
