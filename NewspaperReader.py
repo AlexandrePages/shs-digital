@@ -51,7 +51,7 @@ def define_sentence(i,j,text):
 	new_sen = []
 	z=0
 	for i in range(1,len(sen)):
-	 if sen[i] == '.' and sen[i-1].islower():
+	 if sen[i] == '.' and not sen[i-1].isupper():
 		 new_sen.append(sen[z+1:i])
 		 z=i
 	return new_sen
@@ -157,7 +157,7 @@ def get_text_for_name(fichier, name):
 		sen=[]
 		for i in lr:
 			#print(i)
-			ll=min(i[0],0)
+			ll=max(i[0],0)
 			rr=min(len(text)-1,i[-1])
 			sen+=text[ll:rr]
 		sen = clean_text_post(sen)
@@ -246,10 +246,10 @@ class base_gui():
 			sen = get_text_for_name(nom_fichier,name)
 			evs = pf.find_evenement(sen,text,name)
 			for e in range(len(evs)):
-				ev = es.evenement(evs[e][0],evs[e][1],evs[e][2])
+				ev = es.evenement(evs[e][0],evs[e][1],evs[e][2],evs[e][3])
 				prof.add_evenement(ev)
 				#prof.get_evenement(e)
-			
+		prof.sort_evenements_by_score()
 		t2p=prof.str_fiche()
 		self.make_new_text_window(t2p)
 			

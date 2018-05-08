@@ -13,6 +13,8 @@ class fiche:
 	def get_evenement(self,i):
 		if i < len(self.evts):
 			print(self.evts[i])
+	def sort_evenements_by_score(self):
+		self.evts.sort(key=lambda x: x.score, reverse=False)
 	def str_fiche(self):
 		s = [self.name]
 		s.append('\n')
