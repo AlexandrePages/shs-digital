@@ -177,8 +177,9 @@ def Define_AbsOcc(NS,AO):
         if AO[i] == 'None':
             AO[i] = 0
     T = []
-    T = [x for _,x in sorted(zip(AO,NS))]    
-    return T
+    T = [x for _,x in sorted(zip(AO,NS))]
+    AO = sorted(AO)    
+    return T,AO
 
 
 def find_evenement(Lines, Full, Name):
@@ -211,7 +212,7 @@ def find_evenement(Lines, Full, Name):
     
     
     
-    NewSortedSen = Define_AbsOcc(NewSortedSen,NewSortedOcc)
+    [NewSortedSen,NewSortedOcc] = Define_AbsOcc(NewSortedSen,NewSortedOcc)
     
     
     TempTab = []
@@ -220,6 +221,7 @@ def find_evenement(Lines, Full, Name):
         TempTab.append(DateTab[i])
         TempTab.append(PaysFinal)
         TempTab.append(NewSortedSen[i])
+        TempTab.append(NewSortedOcc[i])
         FinalTab.append(TempTab)
         TempTab = []
     return FinalTab
