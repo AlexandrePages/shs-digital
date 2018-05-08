@@ -1,8 +1,9 @@
 class evenement:
-	def __init__(self,d,l,a):
+	def __init__(self,d,l,a,s):
 		self.date=d
 		self.lieu=l
 		self.action=a
+		self.score=s
 class fiche:
 	def __init__(self, n):
 		self.name=n
@@ -34,5 +35,9 @@ class fiche:
 				s.append('RANG:')
 				s.append('\n')
 				s.append(str(rang))
+				s.append('\n')
+				s.append('SCORE:')
+				s.append('\n')
+				s.append(str(i.score))
 				rang+=1
 		return s
