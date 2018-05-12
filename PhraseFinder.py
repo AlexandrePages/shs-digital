@@ -49,7 +49,7 @@ def clean_up_sen(a):
 
 
 def find_date(fulltext,sen,index_text,date_tab):
-    DATE = str(0)
+    DATE = ''
     DateTab = ['None','None','None']
     found = 0
     AnalyseDate = sen
@@ -78,11 +78,9 @@ def find_date(fulltext,sen,index_text,date_tab):
     if len(date_tab) != 0 and found == 0:
         DATE = date_tab[len(date_tab)-1]
         found = 0
-        return DATE     
-    
-    
-    
-    DATE = DateTab[0] + '/' +   DateTab[1]  + '/' +    DateTab[2]
+        return DATE   
+        
+    DATE = DateTab[2] + '/' +   DateTab[1]  + '/' +    DateTab[0]
     return DATE
 
 #------------------------------------------------------------------------------
@@ -156,7 +154,7 @@ def Occurence(sen):
         Occ = 0
         for j in range(0,len(sen_sort)):
             if words[i] == sen_sort[j]:
-                Occ -= 1
+                Occ += 0.0001
         wordsocc.append(Occ)
     
     
@@ -218,9 +216,9 @@ def Define_AbsOcc(NS,AO):
         if j.d[0].freqliv != 'None':
             AO[i] -= 1/(j.d[0].freqliv+1)
             if 'ADJ' in j.d[0].cgram:
-                AO[i] -= 1
+                AO[i] -= 0.1
             if j.d[0].cgram == 'ADV':
-                AO[i] -= 1
+                AO[i] -= 0.1
             if j.d[0].cgram == 'NOM':
                 AO[i] -= 0.2
             if j.d[0].cgram == 'VER':
