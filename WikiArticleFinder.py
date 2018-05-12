@@ -2,7 +2,7 @@
 import wikipedia as wk
 import io
 import os
-
+import re
 def get_article_content(a):
 	wk.set_lang('fr')
 	p=wk.page(a)
@@ -13,17 +13,23 @@ def print_article(a):
 	p=wk.page(a)
 	print(p.content)
 
+def clean_article(a):
+	p=re.sub(r'(?m)^=.{1,}=$', '', a)
+	p=re.sub(r'(?m)^\s$', '', p)
+	print(p)
+	return p
 def write_article(a,path):
 	try:
 		b="".join(i for i in a if i.isalnum())
 		filename=path + '/' + b + '.txt'
 		if not os.path.isfile(filename):
 			p = get_article_content(a)
+			p = clean_article(p)
 			f=io.open(filename,'w',encoding='utf8')
 			f.write(p)
 			f.close()
-	except wk.exceptions.DisambiguationError:
-		print('Dis Err')
+	except (wk.exceptions.DisambiguationError, wk.exceptions.PageError):
+		print('Error')
 
 def get_related_articles(a,n,namebool):
 	wk.set_lang('fr')
@@ -48,3 +54,5 @@ def make_doc(a,n, namebool):
 	rl=get_related_articles(a,n, namebool)
 	for i in rl:
 		write_article(i,a)
+
+make_doc('Georges Orwell', 10,1)
