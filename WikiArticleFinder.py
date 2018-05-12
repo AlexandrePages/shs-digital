@@ -16,7 +16,6 @@ def print_article(a):
 def write_article(a,path):
 	try:
 		b="".join(i for i in a if i.isalnum())
-		print(b)
 		filename=path + '/' + b + '.txt'
 		if not os.path.isfile(filename):
 			p = get_article_content(a)

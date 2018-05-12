@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Spyder Editor
-
 """
 import math
 
@@ -258,7 +257,3 @@ with open("pays.txt", 'r') as pays_file:
     Pays = pays_file.read()
     Pays = Pays.split('\n')
 
-
-
-    
-    
