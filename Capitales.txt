@@ -1,0 +1,243 @@
+Pékin
+Tokyo
+Kinshasa
+Moscou
+Séoul
+Jakarta
+Dacca
+Mexico
+Londres
+Lima
+Bangkok
+Téhéran
+Bogota
+Le Caire
+Bagdad
+Hong Kong
+Singapour
+Ankara
+Santiago
+Riyad
+Alger
+Berlin
+Hanoï
+Madrid
+Pyongyang
+Kaboul
+Nairobi
+Addis-Abeba
+Buenos Aires
+Rome
+Kiev
+Taipei
+Brasília
+Amman
+Luanda
+Pretoria
+Paris
+Tashkent
+Bakou
+Stockholm
+La Havane
+Phnom Penh
+Bucarest
+Caracas
+Rabat
+Vienne
+Khartoum
+Budapest
+Varsovie
+Minsk
+Manille
+Kampala
+Accra
+Yaoundé
+Antananarivo
+Beyrouth
+Quito
+Harare
+Doha
+Sanaa
+Conakry
+Kuala Lumpur
+Montevideo
+Lusaka
+Hargeisa
+Bamako
+Prague
+Port-au-Prince
+Tripoli
+Koweït
+Belgrade
+Saint-Domingue
+Mogadiscio
+Sofia
+Brazzaville
+Bruxelles
+Bruxelles-Ville	
+Erevan
+Maputo
+Freetown
+Tbilissi
+Dakar
+Ouagadougou
+Dublin
+Monrovia
+Guatemala
+Islamabad
+Managua
+Naypyidaw
+Oulan-Bator
+Lilongwe
+Ottawa
+La Paz
+Bichkek
+Astana
+Lomé
+Panama
+Katmandou
+Amsterdam
+Zagreb
+Mascate
+Niamey
+Chișinău
+Jérusalem
+Abuja
+Tirana
+Tunis
+Achgabat
+N'Djaména
+Tegucigalpa
+Bangui
+Athènes
+Nouakchott
+Kigali
+Riga
+Kingston
+Washington
+Oslo
+Helsinki
+Abou Dhabi
+Douchanbé
+Vilnius
+Libreville
+Asmara
+Lisbonne
+San Salvador
+Asunción
+Macao
+Skopje
+Copenhague
+Djibouti
+Yamoussoukro
+Bissau
+Bratislava
+San Juan
+Tallinn
+Bujumbura
+Sarajevo
+Wellington
+Djouba
+Canberra
+San José
+Port Moresby
+Vientiane
+Dodom
+Maseru
+Nicosie
+Ljubljana
+Paramaribo
+Windhoek
+New Delhi
+Nassau
+Gaborone
+Porto-Novo
+Pristina
+Tifariti
+Tiraspol
+Port-Louis
+Podgorica
+Manam
+Georgetown
+Praia
+Berne
+Sri Jayawardenapura Kotte
+Reykjavík
+Bridgetown
+Malé
+Thimphu
+Malabo
+Nouméa
+Nicosia
+Suva
+Mbabane
+Luxembourg
+Castries
+Saipan
+Moroni
+Honiara
+Dili
+São Tome
+Pago Pago
+Port of Spain
+Stepanakert
+Willemstad
+Kingstown
+Apia
+Port Vila
+Monaco
+Banjul
+Tarawa
+Oranjestad
+Victoria
+Gibraltar
+Saint Helier
+Bandar Seri Begawan
+George Town
+Douglas
+Papeete
+Ramallah
+Majuro
+Andorre-la-Vieille
+Saint John's
+Nukuʻalofa
+Tórshavn
+Saint-Pierre-Port
+Belmopan
+Nuuk
+Roseau
+Basseterre
+Mariehamn
+Charlotte Amalie
+Palikir
+Road Town
+Saint-Georges
+La Valette
+Saint-Pierre (Antilles françaises)
+Saint-Pierre
+Avarua
+Vaduz
+Saint-Marin
+Funafuti
+Cockburn Town
+Tifariti
+Gustavia
+Port Stanley
+Longyearbye
+Flying Fish Cov
+Philipsburg
+Mata-Utu
+The Valley
+Yaren
+Hagåtña
+Brades
+Hamilton
+Kingston
+Vatican
+Jamestown
+Alofi
+Nukunonu
+Melekeok
+West Island
+Adamstown
+King Edward Point
