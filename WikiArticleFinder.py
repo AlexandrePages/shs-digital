@@ -16,7 +16,6 @@ def print_article(a):
 def clean_article(a):
 	p=re.sub(r'(?m)^=.{1,}=$', '', a)
 	p=re.sub(r'(?m)^\s$', '', p)
-	print(p)
 	return p
 def write_article(a,path):
 	try:
@@ -54,5 +53,3 @@ def make_doc(a,n, namebool):
 	rl=get_related_articles(a,n, namebool)
 	for i in rl:
 		write_article(i,a)
-
-make_doc('Georges Orwell', 10,1)
