@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Spyder Editor
+
 """
 import math
 
@@ -33,12 +34,6 @@ def find_date(fulltext,sen,index_text,date_tab):
         if len(AnalyseDate[i]) == 4 and AnalyseDate[i].isdigit():
             DATE = AnalyseDate[i]
             found = 1
-#        else:
-#            for j in range(0,index_text):
-#                AnalyseDate2 = fulltext[j]
-#                for i in range(0,len(AnalyseDate2)):
-#                    if len(AnalyseDate2[i]) == 4 and AnalyseDate2[i].isdigit():
-#                        DATE = AnalyseDate2[i]
     if len(date_tab) != 0 and found == 0:
         DATE = date_tab[len(date_tab)-1]
         found = 0
@@ -257,3 +252,7 @@ with open("pays.txt", 'r') as pays_file:
     Pays = pays_file.read()
     Pays = Pays.split('\n')
 
+
+
+    
+    
