@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter.ttk import *
 import EventStructure as es
 import PhraseFinder as pf
 import numpy as np
@@ -6,165 +7,9 @@ import matplotlib.pyplot as mpl
 import WikiArticleFinder as waf
 import os
 import io
-
-def open_fichier(nom_fichier):
-	fichier=io.open(nom_fichier,'r',encoding='utf8')
-	text=fichier.read()
-	text = text.split('\n')
-	fichier.close()
-	return text;
-
-def close_words(text):
-	#print(len(text))
-	for i in range(0,len(text)-1):
-		#print(text[i][len(text[i])-1])
-		#print(text[i])
-		if len(text[i]) > 0 and text[i][len(text[i])-1]=='-':
-			if ' ' in text[i+1]:
-				a = text[i+1].split(' ')
-				text[i] = text[i][:len(text[i])-1]+a[0]
-				text[i+1] = text[i+1][len(a[0])+1:len(text[i+1])-1]
-			else:
-				a = text[i+1]
-				text[i] = text[i][:len(text[i])-1]+a
-				text[i+1]=''
-		#print(text[i])		
-	return text
-
-def find_name(n,f,l, text):
-	wo = []
-	fo = []
-	lo = []
-	for i in range(0,len(text)):
-		if n in text[i]:
-			wo.append(i)
-		elif f in text[i]:
-			fo.append(i)
-		elif l in text[i]:
-			lo.append(i)
-	return [wo,fo,lo]
-
-def define_sentence(i,j,text):
-	sen = ''
-	for i in range(i,j):
-		sen += text[i]
-	new_sen = []
-	z=0
-	for i in range(1,len(sen)):
-	 if sen[i] == '.' and not sen[i-1].isupper():
-		 new_sen.append(sen[z+1:i])
-		 z=i
-	return new_sen
-
-def clean_text_pre(text):
-	text = close_words(text)
-	for i in range(len(text)):
-		text[i]+=' '
-	text=define_sentence(0,len(text)-1,text)
-	return text
-def clean_text_post(text):
-	#text = sc.check_text(text)
-	text = list(filter(lambda x : x != '', text))		
-	return text
-
-def check_name(name):
-	name = name.split(' ')
-	if len(name) > 1:
-		return True
-	return False
-
-def split_name(name):
-	return name.split(' ');
-
-def get_closest_lr(r,m,lts):
-	if r == [] or m == []:
-		return [0,0]
-	else:
-		rl = list(filter(lambda x: x<m,r))
-		rr = list(filter(lambda x: x>m,r))
-		rl=np.array(rl)
-		rr=np.array(rr)
-		if rl.size == 0:
-			fl=m-lts
-		else:
-			l=np.abs(rl-m).argmin()
-			fl=int(abs(rl[l]))
-		if rr.size == 0:
-			fr=m+lts
-		else:
-			r=np.abs(rr-m).argmin()
-			fr=int(abs(rr[r]))
-		return [fl,fr]
-	
-def plot_fit(x,y,p):
-	xx=np.linspace(0,x[-1],300)
-	plot = mpl.plot(x,y,'.',xx,p(xx),'-')
-	mpl.show()
-	
-def name_occ_fit(wo,fo,lo,text):
-	#print([wo, fo, lo])
-	
-	a=[0]*len(text)
-	x=range(len(text))
-	we=[0]*len(text)
-	for i in x:
-		if i in wo:
-			a[i]+=1
-		if i in fo:
-			a[i]+=.5
-		if i in lo:
-			a[i]+=.8
-		we[i] = a[i] + len(text[i])/1000
-	b=[.3]*len(lo)
-	c=[1]*len(wo)
-	y = np.array(a+b+c)
-	z = np.polyfit(x,a,10,w=we)
-	p=np.poly1d(z)
-	
-	return [x,a,p]
-	
-def make_article_bounds(wo,p):
-	r=np.round(np.roots(p))
-	lr=[]
-	for i in wo:
-		lr.append(get_closest_lr(r,i,10))
-	nlr=[]
-	for i in lr:
-		if i not in nlr:
-			nlr.append(i)
-	return nlr
-
-def format_name(name):
-	if check_name(name):
-		[firstname,lastname] = split_name(name)
-	else:
-		[firstname,lastname] = ['_None_','_None_']
-	return [firstname,lastname]
-
-def get_text_for_name(fichier, name):
-	
-	text = open_fichier(fichier)
-	# text is an array of newspaper lines
-	text = clean_text_pre(text)
-	# text is now an array of sentences
-	[firstname,lastname]=format_name(name)
-	[wo,fo,lo] = find_name(name, firstname,lastname,text)
-	if wo==[] and fo==[] and lo==[]:
-		sen=[]
-	else:
-		[x,y,p] = name_occ_fit(wo,fo,lo,text)
-		lr=make_article_bounds(wo,p)
-		sen=[]
-		for i in lr:
-			#print(i)
-			ll=max(i[0],0)
-			rr=min(len(text)-1,i[-1])
-			sen+=text[ll:rr]
-		sen = clean_text_post(sen)
-	
-	return sen
-
-		
+#import AnimatedGIF as ag
+from TextParser import *
+import time
 #sen = make_sentences('JDG19101101.txt','Henri Dunant')
 #print(sen)
 #'JDG19101101.txt'
@@ -172,13 +17,15 @@ def get_text_for_name(fichier, name):
 
 class base_gui():
 	def __init__(self):
-		
 		self.app = Tk()
+		Style().theme_use('classic')
 		self.frame = Frame(self.app)
 		
+		self.app.title('EntryMaker Bot')
 		self.frame.grid()
-		self.title = Label(self.frame, fg='RED', text="ENTRYMAKER BOT v0.1 alphatest")
-		self.title.grid(row=0)
+		self.title = Label(self.frame, text="EntryMaker Bot Beta")
+		self.title.grid(row=0,columnspan=2)
+		self.title.config(font=('Times',15,'bold'))
 		
 		self.file_label = Label(self.frame, text="Fichier")
 		self.file_label.grid(row=3)
@@ -205,15 +52,18 @@ class base_gui():
 		self.file_entry.grid(row=3,column=1)
 
 		self.file_entry.delete(0, END)
-		self.file_entry.insert(0, "Don't Use")
+		self.file_entry.insert(0, "Fichier...")
 		
 		
-		self.button = Button(self.frame, text="RUN", fg="blue", command=self.run_search)
-		self.button.grid(row=4,column=0)
-        
-		self.button = Button(self.frame, text="PLOT", fg="red", command=self.plot_fit_gui)
-		self.button.grid(row=4,column=1)
-        
+		self.button1 = Button(self.frame, text="RUN", command=self.run)
+		self.button1.grid(row=4,column=0)
+		
+		self.button1.config(width=30)
+		
+		self.button2 = Button(self.frame, text="PLOT", command=self.plot_fit_gui)
+		self.button2.grid(row=4,column=1)
+		
+		self.button2.config(width=30)
 		self.app.mainloop()
 		
 	def make_new_text_window(self,text):
@@ -250,6 +100,8 @@ class base_gui():
 				prof.add_evenement(ev)
 				#prof.get_evenement(e)
 		prof.sort_evenements_by_score()
+		prof.remove_score_0()
+		prof.remove_dup()
 		t2p=prof.str_fiche()
 		self.make_new_text_window(t2p)
 			
@@ -260,6 +112,24 @@ class base_gui():
 		text = open_fichier(fichier)
 		[firstname,lastname]=format_name(name)
 		[wo,fo,lo] = find_name(name, firstname,lastname,text)
-		[x,y,p] = name_occ_fit(wo,fo,lo,text)
-		plot_fit(x,y,p)
+		[x,y,p,fit] = name_occ_fit_gauss(wo,fo,lo,text)
+		plot_fit(x,y,fit)
+	def play_gif(self):
+		w=692
+		h=500	
+		ws = self.app.winfo_screenwidth() # width of the screen
+		hs = self.app.winfo_screenheight() # height of the screen
+		x = (ws/2) - (w/2)
+		y = (hs/2) - (h/2)
+		gif_tl=Toplevel(self.app)
+		gif_tl.transient()
+		gif_tl.geometry('%dx%d+%d+%d' % (w, h, x, y))
+		gif_tl.overrideredirect(1)
+		gif = ag.AnimatedGif(gif_tl,'Masterpiece.gif',delay=.1)
+		gif.pack()
+		gif.start()
+	def run(self):	
+		#self.play_gif()
+		#self.app.update()
+		self.run_search()
 u = base_gui()

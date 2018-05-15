@@ -53,3 +53,4 @@ def make_doc(a,n, namebool):
 	rl=get_related_articles(a,n, namebool)
 	for i in rl:
 		write_article(i,a)
+

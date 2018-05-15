@@ -15,23 +15,27 @@ class fiche:
 			print(self.evts[i])
 	def sort_evenements_by_score(self):
 		self.evts.sort(key=lambda x: x.score, reverse=False)
+	def remove_score_0(self):
+		self.evts = list(filter(lambda x : x.score != 0, self.evts))
+	def remove_dup(self):
+		d = []
+		for i in range(len(self.evts)-1):
+			for j in range(i+1,len(self.evts)):
+				if self.evts[i].action==self.evts[j].action:
+					d.append(i)
+					
+		for i in reversed(d):
+			self.evts.pop(i)
 	def str_fiche(self):
 		s = [self.name]
 		s.append('\n')
 		rang=0
 		if len(self.evts)>0:
 			for i in self.evts:
-				s.append('\n')
-				s.append('DATE:')
-				s.append('\n')
 				s.append(i.date)
-				s.append('\n')
-				s.append('LIEU:')
-				s.append('\n')
+				s.append(' / ')
 				s.append(i.lieu)
-				s.append('\n')
-				s.append('ACTION:')
-				s.append('\n')
+				s.append('. ')
 				s.append(i.action)
 				s.append('\n')
 				s.append('RANG:')
@@ -41,5 +45,7 @@ class fiche:
 				s.append('SCORE:')
 				s.append('\n')
 				s.append(str(i.score))
+				s.append(' \n')
+				s.append(' \n')
 				rang+=1
 		return s

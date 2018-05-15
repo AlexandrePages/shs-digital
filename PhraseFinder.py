@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Spyder Editor
-
 """
 import math
 import re
@@ -162,7 +161,7 @@ def Occurence(sen):
         sen_tot_occ.append(0)
         for j in range(0,len(words)):
             if words[j] in sen[i]:
-                sen_tot_occ[i] -= wordsocc[i]
+                sen_tot_occ[i] -= wordsocc[j]
             
     for i in range(0,len(sen)):
         sen_tot_occ[i] = sen_tot_occ[i]/len(sen[i])
@@ -273,10 +272,3 @@ def find_evenement(Lines, Full, Name):
         FinalTab.append(TempTab)
         TempTab = []
     return FinalTab
-        
-
-
-
-
-    
-    
