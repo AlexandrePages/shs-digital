@@ -7,13 +7,7 @@ import matplotlib.pyplot as mpl
 import WikiArticleFinder as waf
 import os
 import io
-#import AnimatedGIF as ag
-from TextParser import *
-import time
-#sen = make_sentences('JDG19101101.txt','Henri Dunant')
-#print(sen)
-#'JDG19101101.txt'
-#'Henri Dunant'
+import TextParser as tp
 
 class base_gui():
 	def __init__(self):
@@ -92,8 +86,8 @@ class base_gui():
 		prof = es.fiche(name)
 		for filename in enumerate(os.listdir(name + '/')):
 			nom_fichier= name + '/' + filename[1]
-			text = open_fichier(nom_fichier)
-			sen = get_text_for_name(nom_fichier,name)
+			text = tp.open_fichier(nom_fichier)
+			sen = tp.get_text_for_name(nom_fichier,name)
 			evs = pf.find_evenement(sen,text,name)
 			for e in range(len(evs)):
 				ev = es.evenement(evs[e][0],evs[e][1],evs[e][2],evs[e][3])
@@ -109,27 +103,12 @@ class base_gui():
 	def plot_fit_gui(self):
 		name = self.name_entry.get()
 		fichier = self.file_entry.get()
-		text = open_fichier(fichier)
-		[firstname,lastname]=format_name(name)
-		[wo,fo,lo] = find_name(name, firstname,lastname,text)
-		[x,y,p,fit] = name_occ_fit_gauss(wo,fo,lo,text)
-		plot_fit(x,y,fit)
-	def play_gif(self):
-		w=692
-		h=500	
-		ws = self.app.winfo_screenwidth() # width of the screen
-		hs = self.app.winfo_screenheight() # height of the screen
-		x = (ws/2) - (w/2)
-		y = (hs/2) - (h/2)
-		gif_tl=Toplevel(self.app)
-		gif_tl.transient()
-		gif_tl.geometry('%dx%d+%d+%d' % (w, h, x, y))
-		gif_tl.overrideredirect(1)
-		gif = ag.AnimatedGif(gif_tl,'Masterpiece.gif',delay=.1)
-		gif.pack()
-		gif.start()
+		text = tp.open_fichier(fichier)
+		[firstname,lastname]=tp.format_name(name)
+		[wo,fo,lo] = tp.find_name(name, firstname,lastname,text)
+		[x,y,p,fit] = tp.name_occ_fit_gauss(wo,fo,lo,text)
+		tp.plot_fit(x,y,fit)
 	def run(self):	
-		#self.play_gif()
-		#self.app.update()
+		self.app.update()
 		self.run_search()
 u = base_gui()

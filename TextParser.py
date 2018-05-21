@@ -1,3 +1,6 @@
+import io
+import numpy as np
+import matplotlib.pyplot as mpl
 def open_fichier(nom_fichier):
 	fichier=io.open(nom_fichier,'r',encoding='utf8')
 	text=fichier.read()
